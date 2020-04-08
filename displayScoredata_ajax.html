@@ -1,0 +1,121 @@
+<html>
+    <head>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="displayScoredata.js"></script>
+        <meta charset = "utf-8">
+    </head>
+    <style>
+            #panel{
+                background: lightcyan;
+                margin: 20 auto;
+                width: 800px;
+                height: auto;
+            }
+            table{
+                margin: 20px auto;
+            }
+            .sort{
+                margin: 0px 10px;
+            }
+            .level_ch{
+                margin: 10px 5px;
+            }
+            .diff_ch{
+                margin: 10px 5px;
+            }
+            #statistics td{
+                width: 75px;
+            }
+            .gray{
+                background: lightgray;
+            }
+    </style>
+    <body>
+        <div id="panel">
+            <p>レベル絞り込み</p>
+            <input type = "checkbox" class="level_ch 1">
+            <span>1</span>
+            <input type = "checkbox" class="level_ch 2">
+            <span>2</span>
+            <input type = "checkbox" class="level_ch 3">
+            <span>3</span>
+            <input type = "checkbox" class="level_ch 4">
+            <span>4</span>
+            <input type = "checkbox" class="level_ch 5">
+            <span>5</span>
+            <input type = "checkbox" class="level_ch 6">
+            <span>6</span>
+            <input type = "checkbox" class="level_ch 7">
+            <span>7</span>
+            <input type = "checkbox" class="level_ch 7+">
+            <span>7+</span>
+            <input type = "checkbox" class="level_ch 8">
+            <span>8</span>
+            <input type = "checkbox" class="level_ch 8+">
+            <span>8+</span>
+            <input type = "checkbox" class="level_ch 9">
+            <span>9</span>
+            <input type = "checkbox" class="level_ch 9+">
+            <span>9+</span>
+            <input type = "checkbox" class="level_ch 10">
+            <span>10</span>
+            <input type = "checkbox" class="level_ch 10+">
+            <span>10+</span>
+            <input type = "checkbox" class="level_ch 11">
+            <span>11</span>
+            <input type = "checkbox" class="level_ch 11+">
+            <span>11+</span>
+            <input type = "checkbox" class="level_ch 12">
+            <span>12</span>
+            <input type = "checkbox" class="level_ch 12+">
+            <span>12+</span>
+            <input type = "checkbox" class="level_ch 13">
+            <span>13</span>
+            <input type = "checkbox" class="level_ch 13+">
+            <span>13+</span>
+            <input type = "checkbox" class="level_ch 14">
+            <span>14</span>
+            <input type = "checkbox" class="level_ch 14+">
+            <span>14+</span>
+            <input type="button" value="全選択" onclick="selectAll('.level_ch')">
+            <input type="button" value="全解除" onclick="deselectAll('.level_ch')"><br>
+            <p>難易度絞り込み</p>
+            <input type = "checkbox" class="diff_ch BASIC">
+            <span>BASIC</span>
+            <input type = "checkbox" class="diff_ch ADVANCED">
+            <span>ADVANCED</span>
+            <input type = "checkbox" class="diff_ch EXPERT">
+            <span>EXPERT</span>
+            <input type = "checkbox" class="diff_ch MASTER">
+            <span>MASTER</span>
+            <input type = "checkbox" class="diff_ch LUNATIC">
+            <span>LUNATIC</span>
+            <input type="button" value="全選択" onclick="selectAll('.diff_ch')">
+            <input type="button" value="全解除" onclick="deselectAll('.diff_ch')"></br>
+            <input type="button" value="更新" style="margin: 10px 0px;" onclick="reflesh()"></br>
+            <a href="rateTarget.html">レート対象へ</a></br>
+        </div>
+        <table id="statistics" border="1">
+            <tr align="center">
+                <td></td>
+                <td>S</td>
+                <td>SS</td>
+                <td>SSS</td>
+                <td>SSS+</td>
+                <td>MAX</td>
+            </tr>
+        </table>
+        <table id="scoreTable" border="1">
+            <tr align="center">
+                <td>曲名 <input type="button" value="" class="sort name" onclick="sort_column('name')"</td>
+                <td>難易度 <input type="button" value="" class="sort difficulty" onclick="sort_column('difficulty')"></td>
+                <td>レベル <input type="button" value="" class="sort level" onclick="sort_column('level')"></td>
+                <td>スコア <input type="button" value="" class="sort techScore" onclick="sort_column('techScore')"></td>
+                <td>ランク</td>
+                <td>NEXT</td>
+                <td>AB</td>
+                <td>FB</td>
+            </tr>
+        </table>
+    </body>
+</html>

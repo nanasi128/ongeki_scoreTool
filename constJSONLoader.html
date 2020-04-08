@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <meta charset='utf8'>
+    </head>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="song_list.js"></script>
+    <body>
+    </body>
+    <script>
+    var data = {request: JSON.stringify(Const_JSON)};
+    $.ajax({
+        url: 'loadConstJSON.php',
+        type: 'post',
+        data: data,
+        success: function(data){
+            console.log('ok');
+            console.log(data);
+        },
+        error: function(){
+            console.log('fail');
+        }
+    })
+    </script>
+</html>

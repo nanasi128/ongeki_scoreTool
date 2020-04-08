@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>ConstTableUpdater</title>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    </head>
+    <script>
+        function add_data(){
+           if($('#song_title').val() != "" || $('#difficulty').val() != ""
+                || $('#hot').val() != "" || $('#const').val() != ""){
+                var song_title = $('#song_title').val();
+                var difficulty = $('#difficulty').val();
+                var constant = $('#const').val();
+                var hot = $('#hot').val();
+                var data = {
+                    "song_title" : song_title,
+                    "difficulty" : difficulty,
+                    "const" : constant,
+                    "hot" : hot,
+                    "type" : "add"
+                };
+                var req = {"request": JSON.stringify(data)};
+                $.ajax({
+                  url : "constTableUpdater.php",
+                  type : "POST",
+                  data : req,
+                  success : function(){
+                    $('#success_window').append('<p>Request Success!</p>');
+                  },
+                  error : function(err){
+                    console.log(err);
+                  }
+                });
+            }
+        }
+        function update_data(){
+            if($('#song_title').val() != "" || $('#difficulty').val() != ""
+                || $('#hot').val() != "" || $('#const').val() != ""){
+                var song_title = $('#song_title').val();
+                var difficulty = $('#difficulty').val();
+                var constant = $('#const').val();
+                var hot = $('#hot').val();
+                var data = {
+                    "song_title" : song_title,
+                    "difficulty" : difficulty,
+                    "const" : constant,
+                    "hot" : hot,
+                    "type" : "update"
+                };
+                var req = {"request": JSON.stringify(data)};
+                $.ajax({
+                  url : "constTableUpdater.php",
+                  type : "POST",
+                  data : req,
+                  success : function(){
+                    $('#success_window').append('<p>Request Success!</p>');
+                  },
+                  error : function(err){
+                    console.log(err);
+                  }
+                });
+            }
+        }
+    </script>
+    <body>
+        <div id="success_window"></div>
+        <input type="text" id="song_title" placeholder="曲名"></br>
+        <select id="difficulty">
+            <option value="BASIC">BASIC</option>
+            <option value="ADVACED">ADVANCED</option>
+            <option value="EXPERT">EXPERT</option>
+            <option value="MASTER">MASTER</option>
+            <option value="LUNATIC">LUNATIC</option>
+        </select></br>
+        <input type="text" id="const" placeholder="譜面定数"></br>
+        <select id="hot">
+            <option value="true">TRUE</option>
+            <option value="false">FALSE</option>
+        </select></br>
+        <button type="button" id="add" value="ADD" onclick="add_data()">ADD</button></br>
+        <button type="button" id="update" value="UPDATE" onclick="update_data()">UPDATE</button></br>
+    </body>
+</html>
