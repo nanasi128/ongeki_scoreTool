@@ -3,10 +3,10 @@
 
     $sql = "DROP TABLE IF EXISTS scoreData";
     $stmt = $pdo -> query($sql);
-    
+
     $sql = "CREATE TABLE IF NOT EXISTS scoreData"
     ."("
-    ."name TEXT,"
+    ."title TEXT,"
     ."difficulty char(32),"
     ."level char(32),"
     ."techScore int(32),"
@@ -16,9 +16,12 @@
     ."FB char(32),"
     ."const double,"
     ."rate double,"
-    ."hot char(32)"
+    ."hot char(32),"
+    ."search TEXT"
     .");";
     $stmt = $pdo -> query($sql);
+
+    // var_dump($r);
     // name str
     // difficulty str
     // level str

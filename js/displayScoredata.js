@@ -20,16 +20,17 @@ $(function(){
         val.checked = true;
     });
     $.ajax({
-        url: "fetch_scoreData.php",
+        url: "php/fetch_scoreData.php",
         type: "get",
         dataType: "json",
         success: function(data){
             scoreData = data;
             sorted = data;
+            console.log(data);
             $.each(data, function(idx, val){
-                val.name = remove_quot(val.name);
+                val.title = remove_quot(val.title);
                 val.difficulty = remove_quot(val.difficulty);
-                $('#scoreTable').append("<tr " + background[idx%2] +"><td>" + val.name + "</td><td align='center '" + diff_color[val.difficulty] + ">" + val.difficulty
+                $('#scoreTable').append("<tr " + background[idx%2] +"><td>" + val.title + "</td><td align='center '" + diff_color[val.difficulty] + ">" + val.difficulty
                     + "</td><td align='right'>" + val.level + "</td><td align='right'>" + val.techScore + "</td><td align='right'>" + val.rank
                     + "</td><td style='width:75px;' align='right'>" + val.next + "</td><td>" + val.AB + "</td><td>" + val.FB + "</td></tr>");
                 if(val.rank != "NO PLAY"){
@@ -49,12 +50,12 @@ $(function(){
 });
 function reflesh(){
     sorted = [];
-    
+
     // reset table
     while($('#scoreTable tr')[1]){
         $('#scoreTable tr')[1].remove();
     }
-    
+
     var checked_level = [];
     $.each($('.level_ch'), function(idx, val){
         if(val.checked){
@@ -74,11 +75,11 @@ function reflesh(){
                 $.each(checked_difficulty, function(k, value){
                     if(val.difficulty == value){
                         sorted.push(val);
-                        $('#scoreTable').append("<tr " + background[idx%2] + "><td>" + val.name + "</td><td " + diff_color[val.difficulty] + ">" + val.difficulty
+                        $('#scoreTable').append("<tr " + background[idx%2] + "><td>" + val.title + "</td><td " + diff_color[val.difficulty] + ">" + val.difficulty
                         + "</td><td>" + val.level + "</td><td>" + val.techScore + "</td><td>" + val.rank
                         + "</td><td>" + val.next + "</td><td>" + val.AB + "</td><td>" + val.FB + "</td></tr>");
                         idx++;
-                    }      
+                    }
                 });
             }
         })
@@ -132,7 +133,7 @@ function sort_column(index){
             break;
     }
     $.each(sorted, function(idx, val){
-        $('#scoreTable').append("<tr " + background[idx%2] + "><td>" + val.name + "</td><td " + diff_color[val.difficulty] + ">" + val.difficulty
+        $('#scoreTable').append("<tr " + background[idx%2] + "><td>" + val.title + "</td><td " + diff_color[val.difficulty] + ">" + val.difficulty
                 + "</td><td>" + val.level + "</td><td>" + val.techScore + "</td><td>" + val.rank
                 + "</td><td>" + val.next + "</td><td>" + val.AB + "</td><td>" + val.FB + "</td></tr>");
     })

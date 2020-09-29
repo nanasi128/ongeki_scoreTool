@@ -1,5 +1,5 @@
 <?php
-    require("php/db_login.php");
+    require("db_login.php");
     if(isset($_POST["check"])){
         $table_name = $_POST["table"];
         $sql ="SHOW CREATE TABLE ".$table_name;

@@ -1,51 +1,51 @@
 <?php
+    header("Content-type: text/plain; charset=UTF-8");
     require("db_login.php");
-    if(isset($_POST["upload"])){
-        switch ($_FILES['upfile']['error']) {
-            case UPLOAD_ERR_OK: // OK
-                break;
-            case UPLOAD_ERR_NO_FILE:   // 未選択
-                throw new RuntimeException('ファイルが選択されていません', 400);
-            case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズ超過
-                throw new RuntimeException('ファイルサイズが大きすぎます', 400);
-            default:
-                throw new RuntimeException('その他のエラーが発生しました', 500);
-        }
-        
-        $data = file_get_contents($_FILES["upfile"]["tmp_name"]);
-        require("createTable.php"); // initialize table
-        $boo = false;
+    if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+       && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+    {
+      if(isset($_POST['request'])){
+        require('createTable.php');
+        $data = $_POST['request'];
         $cnt = 0;
-        $row = explode("\r\n", $data);
+        $row = explode("\n", $data);
         foreach($row as $value){
-            if(!$boo){
-                $boo = true;
-                continue;
-            }
-            $song_data = myexplode(",",$value); // expected name,difficulty,level,techScore,rank,next,AB,FB
-            $song_data[0] = stringfy($song_data[0]);
-            $song_data[1] = stringfy($song_data[1]);
-            $sql = "SELECT * FROM constTable WHERE name = $song_data[0] AND difficulty = $song_data[1]";
+            $song_data = myexplode(",",$value); // expected title,difficulty,level,techScore,rank,next,AB,FB
+            $title = $song_data[0];
+            preg_match_all('/[a-zA-Z0-9]|[ぁ-ヶ]|[一-龠]/', $title, $matches);
+            $search = join($matches);
+            $search = stringify($search);
+            $song_data[0] = stringify($song_data[0]);
+            $song_data[1] = stringify($song_data[1]);
+            $sql = "SELECT * FROM constTable WHERE search = $search AND difficulty = $song_data[1]";
             $stmt = $pdo -> query($sql);
             $result = $stmt -> fetchAll();
             if(!empty($result)){
                 $song_data[] = $result[0]["const"];
-                $song_data[] = calRate($song_data[3],$result[0]["const"]);
+                if($result[0]["const"] == 0){
+                  $level = $song_data[2];
+                  if(substr($level, -1) == '+'){
+                    $const = substr($level, mb_strlen($level)-1) + 0.7;
+                  }else {
+                    $const = $level;
+                  }
+                  $song_data[] = calRate($song_data[3], $const);
+                }else $song_data[] = calRate($song_data[3],$result[0]["const"]);
                 $song_data[] = $result[0]["hot"];
             }else{
                 $song_data[] = 0;
                 $song_data[] = 0;
                 $song_data[] = 0;
             }
-            $sql = "INSERT INTO scoreData (name, difficulty, level, techScore, rank,
-                next, AB, FB, const, rate, hot) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $song_data[] = $search;
+            $sql = "INSERT INTO scoreData (title, difficulty, level, techScore, rank,
+                next, AB, FB, const, rate, hot, search) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $pdo -> prepare($sql);
             $stmt -> execute($song_data);
         }
-        header('Location: displayRateTarget.php');
-        exit();
     }
-    function stringfy($s){
+  }
+    function stringify($s){
         return '"'.$s.'"';
     }
     function myexplode($s, $arr){
@@ -58,7 +58,7 @@
                 $mode = true;
                 continue;
             }
-            if($ch == '"' && $mode){ 
+            if($ch == '"' && $mode){
                 $mode = false;
                 continue;
             }

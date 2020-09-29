@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>レート対象</title>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="js/rateTarget.js"></script>
+        <meta charset="utf8">
+    </head>
+    <style>
+        #wrapper{
+            display: flex;
+        }
+        .rate_table{
+            margin-left: 20px;
+        }
+        .gray{
+            background: lightgray;
+        }
+    </style>
+    <body>
+        <a href="displayScoredata_ajax.html" style="display: block; text-align: center;">スコア一覧へ</a></br>
+        <div id="summary_wrapper">
+            <table id="summary" style = "margin: 10px auto;" border = 1>
+                <tr>
+                    <td>Hot Rate</td>
+                    <td>Other Rate</td>
+                    <td>Hot + Other</td>
+                    <td>理論値</td>
+                </tr>
+            </table>
+        <div id="wrapper">
+            <div class="rate_table hot">
+                <table id="hot_target" border = 1>
+                    <tr>
+                        <td>#</td>
+                        <td>曲名</td>
+                        <td>難易度</td>
+                        <td>スコア</td>
+                        <td>譜面定数</td>
+                        <td>レート値</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="rate_table other">
+                <table id="other_target" border = 1>
+                    <tr>
+                        <td>#</td>
+                        <td>曲名</td>
+                        <td>難易度</td>
+                        <td>スコア</td>
+                        <td>譜面定数</td>
+                        <td>レート値</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
